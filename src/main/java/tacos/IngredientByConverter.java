@@ -3,10 +3,13 @@ package tacos;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import tacos.Ingredient.Type;
+
 @Component
-public class IngredientByConverter {
+public class IngredientByConverter implements Converter<String, Ingredient> {
 	
 	private Map<String, Ingredient> ingredientMap = new HashMap<String, Ingredient>();
 	
