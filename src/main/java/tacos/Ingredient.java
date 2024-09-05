@@ -1,8 +1,12 @@
 package tacos;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 public class Ingredient {
 	public String id;
 	public String name;
@@ -24,4 +28,11 @@ public class Ingredient {
 		return type;
 	}
 
+	@Override
+	public String toString() {
+		return "Ingredient [id=" + id + ", name=" + name + ", type=" + type + "]";
+	}
+	
+	
+	
 }
