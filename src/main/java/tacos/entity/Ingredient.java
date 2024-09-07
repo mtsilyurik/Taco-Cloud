@@ -1,4 +1,4 @@
-package tacos;
+package tacos.entity;
 
 import lombok.Data;
 import lombok.Getter;
@@ -10,7 +10,9 @@ import lombok.Setter;
 public class Ingredient {
 	public String id;
 	public String name;
-	public Type type;
+    // TODO Auto-generated method stub
+    @Getter
+    public Type type;
 	
 	public enum Type {
 		WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
@@ -23,12 +25,7 @@ public class Ingredient {
 		this.type = type;
 	}
 
-	public Type getType() {
-		// TODO Auto-generated method stub
-		return type;
-	}
-
-	@Override
+    @Override
 	public String toString() {
 		return "Ingredient [id=" + id + ", name=" + name + ", type=" + type + "]";
 	}

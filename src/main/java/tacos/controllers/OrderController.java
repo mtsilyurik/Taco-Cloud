@@ -1,4 +1,4 @@
-package tacos;
+package tacos.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -10,12 +10,20 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import tacos.entity.TacoOrder;
+import tacos.repository.OrderRepository;
 
 @Slf4j
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
 public class OrderController {
+
+	private OrderRepository orderRepository;
+
+	public OrderController(OrderRepository orderRepository) {
+		this.orderRepository = orderRepository;
+	}
 	
 	@GetMapping("/current")
 	public String orderForm() {
@@ -28,9 +36,12 @@ public class OrderController {
 		if(errors.hasErrors()) {
 			return "orderForm";
 		}
-		
-		System.out.println(order);
+
+		// If no errors
+		orderRepository.save(order);
 		sessionStatus.setComplete();
+
 		return "redirect:/";
 	}
+
 }
