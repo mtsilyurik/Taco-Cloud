@@ -14,17 +14,23 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @Getter
 @Setter
+@Table
 public class TacoOrder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
 	private long id;
 
-	private Date placedAt;
+	private Date placedAt = new Date();
+
 
 	@NotBlank(message="Delivery name is required")
 	private String deliveryName;

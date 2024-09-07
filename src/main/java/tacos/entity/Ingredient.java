@@ -1,35 +1,41 @@
 package tacos.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.relational.core.mapping.Table;
+
+import java.io.Serializable;
 
 @Data
 @Getter
 @Setter
-public class Ingredient {
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+@Table
+public class Ingredient implements Persistable<String>{
+	@Id
 	public String id;
+
 	public String name;
     // TODO Auto-generated method stub
     @Getter
     public Type type;
-	
+
+	@Override
+	public boolean isNew() {
+		return true;
+	}
+
 	public enum Type {
 		WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
 	}
 
-	public Ingredient(String id, String name, Type type) {
-		// TODO Auto-generated constructor stub
-		this.id = id;
-		this.name = name;
-		this.type = type;
-	}
-
-    @Override
+	@Override
 	public String toString() {
 		return "Ingredient [id=" + id + ", name=" + name + ", type=" + type + "]";
 	}
-	
-	
-	
+
+
+
 }
