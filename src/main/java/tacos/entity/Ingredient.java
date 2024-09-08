@@ -1,19 +1,18 @@
 package tacos.entity;
-
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.domain.Persistable;
-import org.springframework.data.relational.core.mapping.Table;
+//import org.springframework.data.annotation.Id;
+//import org.springframework.data.relational.core.mapping.Table;
 
-import java.io.Serializable;
 
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-@Table
-public class Ingredient implements Persistable<String>{
+@NoArgsConstructor
+@Entity
+public class Ingredient {
 	@Id
 	public String id;
 
@@ -21,11 +20,6 @@ public class Ingredient implements Persistable<String>{
     // TODO Auto-generated method stub
     @Getter
     public Type type;
-
-	@Override
-	public boolean isNew() {
-		return true;
-	}
 
 	public enum Type {
 		WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
@@ -35,7 +29,4 @@ public class Ingredient implements Persistable<String>{
 	public String toString() {
 		return "Ingredient [id=" + id + ", name=" + name + ", type=" + type + "]";
 	}
-
-
-
 }

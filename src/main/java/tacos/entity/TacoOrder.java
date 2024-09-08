@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
@@ -14,19 +15,18 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+
 
 @Data
 @Getter
 @Setter
-@Table
+@Entity
 public class TacoOrder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
 	private Date placedAt = new Date();
@@ -60,6 +60,7 @@ public class TacoOrder implements Serializable {
 	
 	@Setter
     @Getter
+	@OneToMany(cascade= CascadeType.ALL)
     private List<Taco> tacos = new ArrayList<Taco>();
 
 	public void addTaco(Taco taco) {
@@ -72,9 +73,13 @@ public class TacoOrder implements Serializable {
 				+ deliveryCity + ", deliveryState=" + deliveryState + ", deliveryZip=" + deliveryZip + ", ccNumber="
 				+ ccNumber + ", ccExpiration=" + ccExpiration + ", ccCVV=" + ccCVV + ", tacos=" + tacos + "]";
 	}
-	
-	
-	
-	
 
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
+		return id;
+	}
 }
