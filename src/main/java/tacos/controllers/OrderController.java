@@ -22,6 +22,7 @@ public class OrderController {
 	private final OrderRepository orderRepository;
 
 	public OrderController(OrderRepository orderRepository) {
+		System.out.println("OrderController");
 		this.orderRepository = orderRepository;
 	}
 	
@@ -40,7 +41,7 @@ public class OrderController {
 		// If no errors
 		orderRepository.save(order);
 		sessionStatus.setComplete();
-
+		log.info("Processing order {}", order);
 		return "redirect:/";
 	}
 

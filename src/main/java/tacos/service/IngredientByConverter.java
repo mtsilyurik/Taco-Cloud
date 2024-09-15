@@ -14,6 +14,7 @@ public class IngredientByConverter implements Converter<String, Ingredient> {
 
 	@Autowired
 	public IngredientByConverter(IngredientRepository ingredientRepository) {
+		System.out.println("IngredientByConverter");
 		this.ingredientRepository = ingredientRepository;
 	}
 
@@ -21,8 +22,4 @@ public class IngredientByConverter implements Converter<String, Ingredient> {
 	public Ingredient convert(String id) {
 		return ingredientRepository.findById(id).orElse(null);
 	}
-
-	// TODO: Create tables at DB
-
-
 }

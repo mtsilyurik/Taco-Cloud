@@ -21,6 +21,7 @@ import tacos.entity.Ingredient;
 import tacos.entity.Ingredient.Type;
 import tacos.entity.Taco;
 import tacos.entity.TacoOrder;
+import tacos.entity.TacoUDT;
 import tacos.repository.IngredientRepository;
 
 @Slf4j
@@ -34,6 +35,7 @@ public class DesignTacoController {
 	@Autowired
 	public DesignTacoController(
 			IngredientRepository ingredientRepo) {
+		System.out.println("DesignTacoController");
 		this.ingredientRepository = ingredientRepo;
 	}
 
@@ -65,6 +67,7 @@ public class DesignTacoController {
 	}
 
 	// Validation taco before using as argument
+	// Using the taco and tacoOrder from model
 	@PostMapping
 	public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
 		
@@ -72,10 +75,9 @@ public class DesignTacoController {
 			return "design";
 		}
 		
-		tacoOrder.addTaco(taco);
+		tacoOrder.addTaco(new TacoUDT(taco.getName(), taco.getIngredients()));
 		log.info("Processing taco: {}", taco);
 		return "redirect:/orders/current";
-		
 	}
 
 	private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type){

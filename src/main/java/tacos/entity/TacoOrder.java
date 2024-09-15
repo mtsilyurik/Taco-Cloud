@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
@@ -15,22 +15,22 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.core.mapping.Table;
 
 
 @Data
-@Getter
-@Setter
-@Entity
+@Table("orders")
 public class TacoOrder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	@PrimaryKey
+	private UUID id;
 
 	private Date placedAt = new Date();
-
 
 	@NotBlank(message="Delivery name is required")
 	private String deliveryName;
@@ -57,13 +57,12 @@ public class TacoOrder implements Serializable {
 	
 	@Digits(integer=3, fraction=0, message="Invalid CVV")
 	private String ccCVV;
-	
-	@Setter
-    @Getter
-	@OneToMany(cascade= CascadeType.ALL)
-    private List<Taco> tacos = new ArrayList<Taco>();
 
-	public void addTaco(Taco taco) {
+	@Column("tacos")
+	private List<TacoUDT> tacos = new ArrayList<TacoUDT>();
+
+	public void addTaco(TacoUDT taco) {
+		System.out.println("add taco");
 		this.tacos.add(taco);
 	}
 
@@ -75,11 +74,11 @@ public class TacoOrder implements Serializable {
 	}
 
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 }
